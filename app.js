@@ -62,7 +62,7 @@ var main = function () {
                     $("#lADescription").text(lionAlertDescription);
 
                 })
-                if ((document.getElementById('lATitle').length != 0 || document.getElementById('lADescription').length != 0) && 0) {
+                if (document.getElementById('lATitle').length != 0 || document.getElementById('lADescription').length != 0) {
                     document.getElementById('lionAlert').style.display = 'block';
                     document.getElementById('weather').style.display = 'none';
                     document.getElementById('clock').style.display = 'none';
