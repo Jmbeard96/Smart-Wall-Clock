@@ -17,22 +17,22 @@ var main = function () {
             var current = data.weather[0].main;
             //console.log(temp);
             //console.log(city);
-            $("#temp").text(temp + " °F");
+            $("#temp").text(temp + "° F");
             //$("#city").text(city + ", TN");
-            $("#highLow").text("Hi: " + high + " ° Lo: " + low + " °");
+            $("#highLow").text("Hi: " + high + "° Lo: " + low + "°");
             $("#current").text(current);
-            
+
             /*if(current === "Clear"){
                 document.body.style.backgroundColor = #00BFFF;
             }*/
         });
     }
-        
+
     function getLionAlerts() {
         //get RSS feed
-        
+
         var rssURL = "http://getrave.com/rss/FHU/channel1";
-        
+
         $.ajax({
             type: "GET",
             url: rssURL,
@@ -41,36 +41,39 @@ var main = function () {
                 console.log("ERROR: Unable to load the RSS feed. Check the URL and your connection status.");
             },
             success: function (xml) {
-                
+
                 var $items = $(xml).find("item");
-                
-                $items.each(function(){
+
+                $items.each(function () {
                     //extract alert title
                     var lionAlertTitle = $(this).find("title").text();
                     console.log(lionAlertTitle);
                     //extract alert description
                     var lionAlertDescription = $(this).find("description").text();
                     console.log(lionAlertDescription);
-                    
+
                     var lionAlertDateString = $(this).find("pubDate").text();
-                    
+
                     var lionAlertDate = Date(lionAlertDateString);
                     console.log(lionAlertDate);
-                    
+
                     //display title and description on page
                     $("#lATitle").text(lionAlertTitle);
                     $("#lADescription").text(lionAlertDescription);
-                    
-                    if (lionAlertTitle === "/0"){
-                        document.getElementById('lionAlert').style.display('none');
-                    }
-                    else{
-                        document.getElementById('lionAlert').style.display('block');
-                    }
+
                 })
+                if ((document.getElementById('lATitle').length != 0 || document.getElementById('lADescription').length != 0) && 0) {
+                    document.getElementById('lionAlert').style.display = 'block';
+                    document.getElementById('weather').style.display = 'none';
+                    document.getElementById('clock').style.display = 'none';
+                } else {
+                    document.getElementById('lionAlert').style.display = 'none';
+                    document.getElementById('weather').style.display = 'block';
+                    document.getElementById('clock').style.display = 'block';
+                }
             }
         });
-        
+
     }
 
 
@@ -94,8 +97,7 @@ var main = function () {
         //Displays time in 12 hours instead of 24
         if (hour > 12) {
             hour = hour - 12;
-        }
-        else if (hour === 0) {
+        } else if (hour === 0) {
             hour = hour + 12;
         }
         //Fixing minutes from looking like "1:5" instead of "1:05"
@@ -103,14 +105,17 @@ var main = function () {
             min = "0" + min;
         }
         $("#time").text(hour + ":" + min + " " + meridiem);
+        $("#lATime").text(hour + ":" + min + " " + meridiem);
         $("#day").text(daysOfWeek[day]);
-        $("#date").text(monthsArray[month] + " " + date + "th, " + year);
+        $("#date").text(monthsArray[month] + " " + date + ", " + year);
 
         getWeather();
+        getLionAlerts();
+
 
     }, 2000);
     
-    getLionAlerts();
+
 }
 
 $(document).ready(main);
