@@ -67,7 +67,7 @@ var main = function () {
                 //Reverse the boolean expression in the if statement to view clock.
                 //App shows clock when there is no RSS feed, but with our project the RSS feed was never taken down.
                 
-                if (/*!*/(document.getElementById('lATitle').length != 0 || document.getElementById('lADescription').length != 0)) {
+                if (!(document.getElementById('lATitle').length != 0 || document.getElementById('lADescription').length != 0)) {
                     document.getElementById('lionAlert').style.display = 'block';
                     document.getElementById('weather').style.display = 'none';
                     document.getElementById('clock').style.display = 'none';
